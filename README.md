@@ -24,3 +24,46 @@ The transfer function ensures that tokens can be transferred securely and effici
 
 #### Initial Supply:
 The initial supply of tokens is minted to the owner upon deployment. This provides a starting point for token distribution and usage within the platform.
+
+## Get Started
+### Executing Program 
+To run this program, you can use Remix, an online Solidity IDE. To get started, go to the Remix website at Remix Ethereum.
+
+
+``` Solidity
+// SPDX-License-Identifier: MIT
+pragma solidity 0.8.26;
+
+//import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract myToken is ERC20 {
+    address owner;
+
+    constructor(uint _initialSupply) ERC20("Gurnoor", "GUR") {
+        owner = msg.sender;
+        _mint(msg.sender, _initialSupply);
+    }
+
+    function mint(address to, uint amount) public {
+        require(msg.sender == owner, "Not Authorized");
+        _mint(to, amount);
+    }
+
+    function burn(uint amount) public {
+        _burn(msg.sender, amount);
+    }
+
+    function transfer(address recipient, uint amount) public override returns (bool) {
+        _transfer(_msgSender(), recipient, amount);
+        return true;
+    }
+
+}
+```
+
+## Author
+Name: Gurnoor Oberoi
+
+## License
+This project is licensed under the MIT License - see the LICENSE.md file for details
